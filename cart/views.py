@@ -51,7 +51,7 @@ def cartpage(request):
         'total_cost':total_cost,
         'cart_item_count':value,
     }
-    return render(request, 'cart\cart.html', context)
+    return render(request, 'cart/cart.html', context)
 
 def addvaluetocart(request):
 
@@ -69,7 +69,7 @@ def addvaluetocart(request):
             'mylist':mylists,
             'total_cost':total_cost,
         }
-        return render(request, r'snippets\cards.html', context)
+        return render(request, r'snippets/cards.html', context)
     else:
         request.session[f'product_{id}'] = id
         request.session[f'product_{id}_quantity'] = 1
@@ -82,7 +82,7 @@ def addvaluetocart(request):
             'mylist':mylists,
             'total_cost':total_cost,
         }
-        return render(request, r'snippets\cards.html', context)
+        return render(request, r'snippets/cards.html', context)
 
 
 def removevaluetocart(request):
@@ -102,7 +102,7 @@ def removevaluetocart(request):
                 'mylist':mylists,
                 'total_cost':total_cost,
             }
-            return render(request, r'snippets\cards.html', context)
+            return render(request, r'snippets/cards.html', context)
         else:
             try:
                 del request.session[f'product_{id}']
@@ -118,7 +118,7 @@ def removevaluetocart(request):
                     'mylist':mylists,
                     'total_cost':total_cost,
                 }
-                return render(request, r'snippets\cards.html', context)
+                return render(request, r'snippets/cards.html', context)
             except:
                 print(request.session.items())
                 print('last')
@@ -131,7 +131,7 @@ def removevaluetocart(request):
                     'mylist':mylists,
                     'total_cost':total_cost,
                 }
-                return render(request, r'snippets\cards.html', context)
+                return render(request, r'snippets/cards.html', context)
     else:
         print(request.session.items())
         print('last')
@@ -144,4 +144,4 @@ def removevaluetocart(request):
             'mylist':mylists,
             'total_cost':total_cost,
         }
-        return render(request, r'snippets\cards.html', context)
+        return render(request, r'snippets/cards.html', context)

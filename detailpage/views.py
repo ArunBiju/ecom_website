@@ -10,7 +10,7 @@ def detailpage(request, slug):
     product = ProductModel.objects.get(slug=slug)
     discount = int((product.selling_price/product.mrp)*100)
     value = sum(get_total_products_quantiy(request))
-    return render(request, 'detailpage\detailpage.html', {'product':product, 'discount':discount, 'cart_item_count':value })
+    return render(request, 'detailpage/detailpage.html', {'product':product, 'discount':discount, 'cart_item_count':value })
 
 def get_products_in_cart(request):
     keys = request.session.keys()
