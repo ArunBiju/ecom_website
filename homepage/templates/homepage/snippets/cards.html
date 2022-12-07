@@ -10,8 +10,8 @@
         <p class="card-text mb-2">
           {{product.details | truncatechars:60}}
         </p></a>
-        <a href="*"><button type="button" class="btn btn-primary btn-sm">Add to Cart</button></a>
-        <button type="button" class="btn btn-success btn-sm">Buy Now</button>
+        <button hx-post="{% url 'homepage:addvaluetocart' %}"  hx-vals='{"product_id": "{{product.slug}}"}' hx-target="#cartbadge" hx-swap="span" type="button" class="btn btn-primary btn-sm">Add to Cart</button>
+        <a href="{% url 'homepage:buynow' product.slug %}"><button  type="button" class="btn btn-success btn-sm">Buy Now</button></a>
       </div>
     </div>
   </div>
