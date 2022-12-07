@@ -1,0 +1,20 @@
+<div class="row row-cols-1 row-cols-md-5 g-2">
+{% for product in products %}
+  <div class="col">
+    <div class="card h-100 text-decoration-none link-dark"><a class="text-decoration-none link-dark" href="{% url 'detailpage:detailpage' product.slug %}">
+      <img src="{{product.thumbnail.url}}" class="card-img-top img-thumbnail" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{product.name}}
+        </h5>
+        <p class="card-text mb-2">
+          {{product.details | truncatechars:60}}
+        </p></a>
+        <a href="*"><button type="button" class="btn btn-primary btn-sm">Add to Cart</button></a>
+        <button type="button" class="btn btn-success btn-sm">Buy Now</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+

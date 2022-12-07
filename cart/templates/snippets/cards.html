@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-8">
+    <div class="container">
+      <div id="cartcontents" class="row row-cols-1">
+        {% for product, quantity, price in mylist %}
+          <div id= class="col p-2">
+            <div class="row border-bottom pb-2">
+              <div class="col-md-auto"><img src="{{product.thumbnail.url}}" id="product_thumbnail" alt="..."></div>
+              <div class="col">
+                <div class="row">
+                  <p>{{product.name}} </span></p>
+                </div>
+                <div class="row">
+                  <p>${{product.selling_price}}</p>
+                </div>
+              </div>
+              <div class="col-md-auto pt-4 pb-4">
+                <p> Quantity: {{quantity}} </p>
+              </div>
+              <div class="col-md-auto pt-4 pb-4">
+                <p> Total: {{price}} </p>
+              </div>
+              <div class="col-md-auto">
+                {% include 'snippets/add_or_delete.html' %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-4 border">
+    <div class="container">
+      <div class="row row-cols-1">
+        <div class="col border-bottom">
+          <h3>Checkout</h3>
+        </div>
+        <div class="col p-5 border-bottom">
+          Total Cost : {{total_cost}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
