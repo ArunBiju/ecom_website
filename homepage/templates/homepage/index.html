@@ -33,26 +33,26 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="static\offcanvas.css" rel="stylesheet">
-    <link href="static\sidebars.css" rel="stylesheet">
+    <link href="static/offcanvas.css" rel="stylesheet">
+    <link href="static/sidebars.css" rel="stylesheet">
   </head>
   <body class="bg-light" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     
-    {% include 'snippets\nav_bar.html' %}
+    {% include 'snippets/nav_bar.html' %}
 
   <div  class="row">
       <div class="col-2 order-First">
-        {% include 'homepage\sidebar.html' %}
+        {% include 'homepage/sidebar.html' %}
       </div>
 
       <div id="home" class="col order-Second">
-        {% include 'homepage\snippets\cards.html' %}
+        {% include 'homepage/snippets/cards.html' %}
       </div>
   </div>
 
 </main>
-    <script src="static\assets\dist\js\bootstrap.bundle.min.js"></script>
-    <script src="static\offcanvas.js"></script>
-    <script src="static\sidebars.js"></script>
+    <script src="static/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/offcanvas.js"></script>
+    <script src="static/sidebars.js"></script>
   </body>
 </html>
