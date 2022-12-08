@@ -130,7 +130,7 @@ def primary(request, id):
     }
     
     if len(products_in_category) == 0:
-        return render(request, 'homepage/snippets/No_result.html', context)
+        return render(request, 'homepage/snippets/no_result.html', context)
     else:
         return render(request, 'homepage/snippets/search.html', context)
 
