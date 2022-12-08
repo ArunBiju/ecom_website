@@ -1,16 +1,24 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
-from django.views import View
-from django.views.generic import DetailView
-from detailpage.models import ProductModel
+from django.http import HttpResponse
+from django.shortcuts import render
+from detailpage.models import ProductModel, PrimaryCategoryModel
+from homepage.models import HomepageImage
 
 
 def detailpage(request, slug):
     product = ProductModel.objects.get(slug=slug)
     discount = int((product.selling_price/product.mrp)*100)
     value = sum(get_total_products_quantiy(request))
-    return render(request, 'detailpage/detailpage.html', {'product':product, 'discount':discount, 'cart_item_count':value })
+    hpbanner = HomepageImage.objects.get(pk=2)
+    category = PrimaryCategoryModel.objects.all()
+    context = {
+        'product':product,
+        'cart_item_count':value,
+        'discount':discount,
+        'hpbanner':hpbanner,
+        'categories':category,
+    }
+    
+    return render(request, 'detailpage/detailpage.html',context)
 
 def get_products_in_cart(request):
     keys = request.session.keys()
@@ -74,9 +82,6 @@ def removevaluetocart(request):
         return HttpResponse(sum(get_total_products_quantiy(request)))
 
 
-        # request.session.flush()
-        # print(request.session.items())
-        # return HttpResponse('0')
 
             
         

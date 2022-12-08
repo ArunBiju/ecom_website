@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from detailpage.models import ProductModel
+from detailpage.models import ProductModel, PrimaryCategoryModel, SecondaryCategoryModel
 from django.db.models import Q
 from detailpage.views import addvaluetocart
+from .models import HomepageImage
 
 
 def get_products_in_cart(request):
@@ -95,15 +96,6 @@ def get_total_products_quantiy(request):
     return products_quantity
 
 
-def homepage(request):   
-    value = sum(get_total_products_quantiy(request))
-    products = ProductModel.objects.all()
-    context = {
-        'products':products,
-        'cart_item_count':value,
-    }
-    return render(request, 'homepage/index.html', context)
-
 def sortby(request):
     search_term = (request.POST.get('search'))
     products = ProductModel.objects.filter(Q(name__contains=search_term)|Q(details__contains=search_term))
@@ -111,6 +103,73 @@ def sortby(request):
         'products':products,
     }
     return render(request, 'homepage/snippets/cards.html', context)
+
+def category(request):
+
+    search_term = (request.POST.get('category'))
+    category = PrimaryCategoryModel.objects.all()
+    context = {
+        'category':category,
+    }
+    return render(request, 'homepage/snippets/cards.html', context)
+
+def primary(request, id):
+
+    primary_category = PrimaryCategoryModel.objects.get(id=id)
+    products_in_category = primary_category.productmodel_set.all()
+    value = sum(get_total_products_quantiy(request))
+    category = PrimaryCategoryModel.objects.all()
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
+    context = {
+        'products':products_in_category,
+        'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
+    }
+    
+    if len(products_in_category) == 0:
+        return render(request, 'homepage/snippets/No_result.html', context)
+    else:
+        return render(request, 'homepage/snippets/search.html', context)
+
+def secondary(request, id):
+
+    category = SecondaryCategoryModel.objects.get(id=id)
+    products_in_category = category.productmodel_set.all()
+    value = sum(get_total_products_quantiy(request))
+    category = PrimaryCategoryModel.objects.all()
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
+    context = {
+        'products':products_in_category,
+         'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
+    }
+    
+    if len(products_in_category) == 0:
+        return render(request, 'homepage/snippets/No_result.html', context)
+    else:
+        return render(request, 'homepage/snippets/search.html', context)
+
+
+def homepage(request):   
+    value = sum(get_total_products_quantiy(request))
+    products = ProductModel.objects.all()
+    category = PrimaryCategoryModel.objects.all()
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
+    context = {
+        'products':products,
+        'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
+    }
+    return render(request, 'homepage/index.html', context)
 
 def buynow(request,slug):
     addvaluetocarthp(request,slug)

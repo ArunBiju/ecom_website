@@ -1,0 +1,132 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.88.1">
+  <title>Shopping Website</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/offcanvas-navbar/">
+  <link href="{% static "assets/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+  <style>
+    #details {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  </style>
+  <link href="{% static 'offcanvas.css' %}" rel="stylesheet">
+  <link href="{% static 'sidebars.css' %}" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+
+</head>
+
+<body class="bg-light" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+  fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16" style="display: none;">
+    <symbol id="speedometer2" viewBox="0 0 16 16">
+      <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+    </symbol>
+  </svg>
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">WebShop</a>
+      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <form hx-post="{% url 'homepage:sort' %}"  hx-target="#home" hx-swap="div">
+          <div class="d-flex flex-row bd-highlight">
+            <div class="pe-2 bd-highlight"><a href="/cart/"><button type="button" class="btn btn-outline-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"></path></svg>
+                Cart {% include 'snippets/badge.html'  %}
+                </button>
+            </div></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+
+  <div class="row">
+
+    <div class="col-5 order-First">
+      <div class="container mb-2 mt-2">
+        {% include 'detailpage/snippets/carousel.html' %}
+      </div>
+    </div>
+
+    <div class="col order-Second">
+
+      <div class="nav-scroller bg-body shadow-sm mb-2">
+        <nav class="nav nav-underline" aria-label="Secondary navigation">
+          <a class="nav-link" aria-current="page" href="#">{{product.primary_category}}</a>
+          <a class="nav-link" href="#">{{product.secondary_category}}</a>
+        </nav>
+      </div>
+
+      <div class="container">
+        <div class="row row-cols-1">
+          <div class="col border-bottom">
+            <h1>{{product.name}}</h1>
+          </div>
+          <div class="col border-bottom mt-2 mb-2">
+            <p class='h3'>
+
+              <small class="text-success">
+              <mark class="text-success" >{{discount}}% off </mark>
+              </small>
+
+              <small class="text-danger">
+              <s>${{product.mrp}}</s>
+              </small>
+
+              <small class="text-success">
+                ${{product.selling_price}}
+              </small>
+
+            </p>
+          </div>
+          <div class="col">
+              {% csrf_token %}
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 border-bottom mb-1">
+                <input type="hidden" name="slug" value="{{product.slug}}">
+                {% include 'detailpage/snippets/add_or_delete.html' %}
+                <a href="{% url 'homepage:buynow' product.slug %}"><div class="col mt-3 mb-3 "><button type="button" class="btn btn-success">Buy Now</button></div></a>
+              </div>
+          <div class="col border-bottom">
+            <h2>Details</h2>
+            <p id="details">{{product.details}}</p>
+          </div>
+          <div class="col fs-3">
+
+            {% if product.total_stock <= 0 or product.availability == False %}
+            <p>Out Of Stock</p>
+            {% else %}
+            <p>{{product.total_stock}} left in Stock</p>
+            {% endif %}
+
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  </main>
+  <script src="{% static 'assets\dist\js\bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'offcanvas.js' %}"></script>
+  <script src="{% static 'sidebars.js' %}"></script>
+</body>
+
+</html>
