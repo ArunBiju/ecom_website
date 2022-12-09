@@ -74,45 +74,16 @@
     <div class="col-8">
       <div class="container">
         <div class="row row-cols-1">
-          {% for product, quantity, price in mylist %}
-            <div id= class="col p-2">
-              <div class="row border-bottom pb-2">
-                <div class="col-md-auto"><img src="{{product.thumbnail.url}}" id="product_thumbnail" alt="..."></div>
-                <div class="col">
-                  <div class="row">
-                    <p>{{product.name}} </span></p>
-                  </div>
-                  <div class="row">
-                    <p>${{product.selling_price}}</p>
-                  </div>
-                </div>
-                <div class="col-md-auto pt-4 pb-4">
-                  <p> Quantity: {{quantity}} </p>
-                </div>
-                <div class="col-md-auto pt-4 pb-4">
-                  <p> Total: {{price}} </p>
-                </div>
-                <div class="col-md-auto">
-                  {% include 'snippets/add_or_delete.html' %}
-                </div>
-              </div>
-            </div>
-          {% endfor %}
+         <p class="h2 text-center"> No products In Cart </p>
         </div>
       </div>
     </div>
-    <div class="col-4 border">
+    <div class="col-4">
       <div class="container">
         <div class="row row-cols-1">
-          <div class="col border-bottom">
-            <h3 class="text-center">Checkout</h3>
+          <div class="col">
+            <a href="/" ><button  class="btn btn-success px-auto" type="submit">Add Products</button></a>
           </div>
-          <div class="col p-5 border-bottom">
-            Total Cost : {{total_cost}}
-          </div>
-          <div class="col col p-5 border-bottom">
-              <a href="/" ><button  class="btn btn-success" type="submit">Checkout</button></a>
-            </div>
         </div>
       </div>
     </div>

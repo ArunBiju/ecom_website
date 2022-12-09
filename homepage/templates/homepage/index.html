@@ -9,13 +9,23 @@
      
     <style>
       #hpimage {
-              max-width: 70%;
+              max-width: 50%;
+              height: 100%;
+            }
+    </style>
+    <style>
+      #hpimage1 {
+              max-width: 30%;
               height: 100%;
             }
     </style>
   </head>
-
-  <nav class="navbar navbar-expand-lg bg-light">
+  <div class="row border">
+    <div class="col-10 mx-auto mb-3">
+      <a class="navbar-brand" href="/"><img id ="hpimage1" src="{{hpbanner.hpimage.url}}" class="d-block m-auto" alt="..."></a>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg bg-light"cat>
     <div class="container-fluid">
       <a class="navbar-brand" href="/">WebShop</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +63,7 @@
       </div>
     </div>
     <div class="row mt-3 mb-5">
+      
      {% include 'homepage/snippets/cards.html' %}
     </div>
   </div>

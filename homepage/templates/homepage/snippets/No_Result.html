@@ -13,6 +13,12 @@
               height: 100%;
             }
     </style>
+    <style>
+      #hpimage1 {
+              max-width: 50%;
+              height: 100%;
+            }
+    </style>
   </head>
 
   <nav class="navbar navbar-expand-lg bg-light">
@@ -48,6 +54,12 @@
 <body  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <div id="home">
     <div class="row mt-3 mb-5">
+      <div class="row mt-3 mb-5">
+        <div class="row">
+          <div class="col-10 mx-auto mb-3">
+            <a class="navbar-brand" href="/"><img id ="hpimage1" src="{{current_category.category_header.url}}" class="d-block m-auto" alt="..."></a>
+          </div>
+        </div>
      <h2 class="text-center">No Products Found</h2>
     </div>
   </div>

@@ -107,9 +107,9 @@ def sortby(request):
 def category(request):
 
     search_term = (request.POST.get('category'))
-    category = PrimaryCategoryModel.objects.all()
+    products = PrimaryCategoryModel.objects.all()
     context = {
-        'category':category,
+        'products':category,
     }
     return render(request, 'homepage/snippets/cards.html', context)
 
@@ -120,6 +120,7 @@ def primary(request, id):
     value = sum(get_total_products_quantiy(request))
     category = PrimaryCategoryModel.objects.all()
     hpimage = HomepageImage.objects.get(pk=1)
+    categoryimage = PrimaryCategoryModel.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
     context = {
         'products':products_in_category,
@@ -127,6 +128,7 @@ def primary(request, id):
         'hpimage':hpimage,
         'hpbanner':hpbanner,
         'categories':category,
+        'current_category':primary_category,
     }
     
     if len(products_in_category) == 0:
@@ -142,12 +144,14 @@ def secondary(request, id):
     category = PrimaryCategoryModel.objects.all()
     hpimage = HomepageImage.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
+    categoryimage = PrimaryCategoryModel.objects.get(pk=1)
     context = {
         'products':products_in_category,
          'cart_item_count':value,
         'hpimage':hpimage,
         'hpbanner':hpbanner,
         'categories':category,
+        'category_image':categoryimage,
     }
     
     if len(products_in_category) == 0:

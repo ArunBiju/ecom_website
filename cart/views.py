@@ -51,7 +51,10 @@ def cartpage(request):
         'total_cost':total_cost,
         'cart_item_count':value,
     }
-    return render(request, 'cart/cart.html', context)
+    if value == 0:
+        return render(request, 'cart/cart_no_products.html', context)
+    else:
+        return render(request, 'cart/cart.html', context)
 
 def addvaluetocart(request):
 
@@ -118,7 +121,7 @@ def removevaluetocart(request):
                     'mylist':mylists,
                     'total_cost':total_cost,
                 }
-                return render(request, r'snippets/cards.html', context)
+                return render(request, r'snippets/no_products.html', context)
             except:
                 print(request.session.items())
                 print('last')
@@ -131,7 +134,7 @@ def removevaluetocart(request):
                     'mylist':mylists,
                     'total_cost':total_cost,
                 }
-                return render(request, r'snippets/cards.html', context)
+                return render(request, r'snippets/no_products.html', context)
     else:
         print(request.session.items())
         print('last')
@@ -144,4 +147,4 @@ def removevaluetocart(request):
             'mylist':mylists,
             'total_cost':total_cost,
         }
-        return render(request, r'snippets/cards.html', context)
+        return render(request, r'snippets/no_products.html', context)

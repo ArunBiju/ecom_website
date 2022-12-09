@@ -8,6 +8,7 @@ secondary_category = models.CharField(max_length=100)
 class PrimaryCategoryModel(models.Model):
 
     primary_category = models.CharField(max_length=100, null=True)
+    category_header = models.ImageField(upload_to='category', null=True, height_field=None, width_field=None, max_length=None)
 
     class Meta:
         verbose_name ="Primary Category"
