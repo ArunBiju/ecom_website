@@ -4,6 +4,7 @@ from detailpage.models import ProductModel, PrimaryCategoryModel, SecondaryCateg
 from django.db.models import Q
 from detailpage.views import addvaluetocart
 from .models import HomepageImage
+from django.core.paginator import Paginator, EmptyPage
 
 
 def get_products_in_cart(request):
@@ -166,12 +167,16 @@ def homepage(request):
     category = PrimaryCategoryModel.objects.all()
     hpimage = HomepageImage.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
+    paginator = Paginator(products, per_page=3)
+    page_object = paginator.page(1)
+    print(paginator.get_page(1))
     context = {
         'products':products,
         'cart_item_count':value,
         'hpimage':hpimage,
         'hpbanner':hpbanner,
         'categories':category,
+        "page_obj": page_object
     }
     return render(request, 'homepage/index.html', context)
 
@@ -183,3 +188,43 @@ def addtocart(request):
     addvaluetocart(request)
     return HttpResponse(sum(get_total_products_quantiy(request))) 
 
+def listing(request, page):
+    value = sum(get_total_products_quantiy(request))
+    products = ProductModel.objects.all()
+    category = PrimaryCategoryModel.objects.all()
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
+    paginator = Paginator(products, per_page=6)
+    try:
+        page_object = paginator.page(page)
+    except EmptyPage:
+        page_object = paginator.page(1)
+    print(paginator.get_page(1))
+    context = {
+        'products':products,
+        'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
+        "page_obj": page_object
+    }
+    return render(request, 'homepage/index_pagenation.html', context)
+
+def homepage(request):   
+    value = sum(get_total_products_quantiy(request))
+    products = ProductModel.objects.all()
+    category = PrimaryCategoryModel.objects.all()
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
+    paginator = Paginator(products, per_page=6)
+    page_object = paginator.page(1)
+    print(paginator.get_page(1))
+    context = {
+        'products':products,
+        'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
+        "page_obj": page_object
+    }
+    return render(request, 'homepage/index_pagenation.html', context)
