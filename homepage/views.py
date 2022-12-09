@@ -150,12 +150,14 @@ def secondary(request, id):
     products_in_category = category.productmodel_set.all()
     value = sum(get_total_products_quantiy(request))
     category = PrimaryCategoryModel.objects.all()
+    secondary = SecondaryCategoryModel.objects.get(id=id)
     hpimage = HomepageImage.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
     categoryimage = PrimaryCategoryModel.objects.get(pk=1)
     context = {
         'products':products_in_category,
-         'cart_item_count':value,
+        'cart_item_count':value,
+        'secondary':secondary,
         'hpimage':hpimage,
         'hpbanner':hpbanner,
         'categories':category,
@@ -163,9 +165,9 @@ def secondary(request, id):
     }
     
     if len(products_in_category) == 0:
-        return render(request, 'homepage/snippets/No_result.html', context)
+        return render(request, 'homepage/snippets/no_result_secondary.html', context)
     else:
-        return render(request, 'homepage/snippets/search.html', context)
+        return render(request, 'homepage/snippets/search_secondary.html', context)
 
 def buynow(request,slug):
     addvaluetocarthp(request,slug)
