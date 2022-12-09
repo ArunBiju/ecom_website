@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from detailpage.models import ProductModel, PrimaryCategoryModel
 from django.shortcuts import render
 from detailpage.models import ProductModel
-from django.views.generic import TemplateView
+
 
 def get_products_in_cart(request):
     keys = request.session.keys()
@@ -46,9 +46,11 @@ def cartpage(request):
     price = get_price(request)
     mylists = zip(products_in_cart, products_quantity_in_cart,price)
     total_cost=sum(get_price(request))
+    category = PrimaryCategoryModel.objects.all()
     context = {
         'mylist':mylists,
         'total_cost':total_cost,
+        'categories':category,
         'cart_item_count':value,
     }
     if value == 0:

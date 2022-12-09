@@ -1,0 +1,24 @@
+<div class="row border">
+  </div>
+  <div class="row mt-2">
+    <h2 class="text-center">No Products Found</h2>
+  </div>
+    <div class="col-4 mx-auto mb-3">
+      {% block pagination %}
+    {% for page_number in page_obj.paginator.get_elided_page_range %}
+        {% if page_number == page_obj.paginator.ELLIPSIS %}
+            {{page_number}}
+        {% else %}
+            <a
+                href="{% url 'homepage:terms-by-page' page_number %}"
+                class="{% if page_number == page_obj.number %}current{% endif %}"
+            >
+            <button class="btn btn-outline-success" type="submit">{{page_number}}</button> 
+            </a>
+        {% endif %}
+    {% endfor %}
+  {% endblock %}
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

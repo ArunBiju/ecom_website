@@ -99,11 +99,17 @@ def get_total_products_quantiy(request):
 
 def sortby(request):
     search_term = (request.POST.get('search'))
+    category = PrimaryCategoryModel.objects.all()
     products = ProductModel.objects.filter(Q(name__contains=search_term)|Q(details__contains=search_term))
     context = {
         'products':products,
+        'categories':category,   
     }
-    return render(request, 'homepage/snippets/cards.html', context)
+    if len(products) == 0:
+        return render(request, 'homepage/snippets/homepage_search_no_result.html', context)
+    else:
+        return render(request, 'homepage/snippets/homepage_search.html', context)
+    
 
 def category(request):
 
@@ -160,26 +166,6 @@ def secondary(request, id):
         return render(request, 'homepage/snippets/No_result.html', context)
     else:
         return render(request, 'homepage/snippets/search.html', context)
-
-
-def homepage(request):   
-    value = sum(get_total_products_quantiy(request))
-    products = ProductModel.objects.all()
-    category = PrimaryCategoryModel.objects.all()
-    hpimage = HomepageImage.objects.get(pk=1)
-    hpbanner = HomepageImage.objects.get(pk=2)
-    paginator = Paginator(products, per_page=3)
-    page_object = paginator.page(1)
-    print(paginator.get_page(1))
-    context = {
-        'products':products,
-        'cart_item_count':value,
-        'hpimage':hpimage,
-        'hpbanner':hpbanner,
-        'categories':category,
-        "page_obj": page_object
-    }
-    return render(request, 'homepage/index.html', context)
 
 def buynow(request,slug):
     addvaluetocarthp(request,slug)

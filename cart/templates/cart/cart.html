@@ -37,6 +37,7 @@
 </head>
 
 <body class="bg-light" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <div id="home">
   
   <nav class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation">
     <div class="container-fluid">
@@ -48,22 +49,19 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+              Category
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>    
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              {% for category in categories %}
+              <li><a class="dropdown-item" href="{% url 'homepage:primary' category.pk %}">{{category.primary_category}}</a></li>
+              {% endfor %}
             </ul>
           </li>
           <li class="nav-item">
             <a href="/cart/" class="nav-link">Your cart</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+
       </div>
     </div>
   </nav>
@@ -128,9 +126,9 @@
   <script src="{% static 'assets\dist\js\bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'offcanvas.js' %}"></script>
   <script src="{% static 'sidebars.js' %}"></script>
+  <footer class="text-center border-top mt-5 fixed-bottom">
+    <p>All rights Reserved ®️</p>
+  </footer>
+</div>
 </body>
-<footer class="text-center border-top mt-5 fixed-bottom">
-  <p>All rights Reserved ®️</p>
-</footer>
-
 </html>
