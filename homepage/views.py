@@ -123,6 +123,7 @@ def primary(request, id):
     hpimage = HomepageImage.objects.get(pk=1)
     categoryimage = PrimaryCategoryModel.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
+    print(products_in_category)
     context = {
         'products':products_in_category,
         'cart_item_count':value,
