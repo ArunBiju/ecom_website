@@ -67,7 +67,7 @@
      {% include 'homepage/snippets/cards.html' %}
     </div>
   
-      <div class="col-4 mx-auto mb-3">
+      <div class="col-12 mb-3" align="center">
         {% block pagination %}
       {% for page_number in page_obj.paginator.get_elided_page_range %}
           {% if page_number == page_obj.paginator.ELLIPSIS %}

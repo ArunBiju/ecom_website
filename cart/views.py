@@ -34,7 +34,6 @@ def get_price(request):
     products_quantity_in_cart = get_total_products_quantiy(request)
     mylists = zip(products_in_cart, products_quantity_in_cart)
     for product,quantity in mylists:
-        print(product.selling_price*quantity)
         price.append(product.selling_price*quantity)
     return price
 
@@ -64,7 +63,6 @@ def addvaluetocart(request):
     if request.session.get(f'product_{id}_quantity', False): 
         request.session[f'product_{id}'] = id
         request.session[f'product_{id}_quantity'] += 1
-        print(request.session.items())
         products_in_cart = get_products_in_cart(request)
         products_quantity_in_cart = get_total_products_quantiy(request)
         price = get_price(request)
@@ -97,7 +95,6 @@ def removevaluetocart(request):
         if int(request.session[f'product_{id}_quantity']) > 1 :
             request.session[f'product_{id}'] = id
             request.session[f'product_{id}_quantity'] -= 1
-            print(request.session.items())
             products_in_cart = get_products_in_cart(request)
             products_quantity_in_cart = get_total_products_quantiy(request)
             price = get_price(request)
@@ -112,8 +109,6 @@ def removevaluetocart(request):
             try:
                 del request.session[f'product_{id}']
                 del request.session[f'product_{id}_quantity']
-                print(request.session.items())
-                print('secondlast')
                 products_in_cart = get_products_in_cart(request)
                 products_quantity_in_cart = get_total_products_quantiy(request)
                 price = get_price(request)
@@ -123,10 +118,14 @@ def removevaluetocart(request):
                     'mylist':mylists,
                     'total_cost':total_cost,
                 }
-                return render(request, r'snippets/no_products.html', context)
+                if products_quantity_in_cart:
+                    return render(request, r'snippets/cards.html', context)
+                else:
+                    return render(request, r'snippets/no_products.html', context)
+
+                
             except:
-                print(request.session.items())
-                print('last')
+
                 products_in_cart = get_products_in_cart(request)
                 products_quantity_in_cart = get_total_products_quantiy(request)
                 price = get_price(request)
@@ -138,8 +137,7 @@ def removevaluetocart(request):
                 }
                 return render(request, r'snippets/no_products.html', context)
     else:
-        print(request.session.items())
-        print('last')
+
         products_in_cart = get_products_in_cart(request)
         products_quantity_in_cart = get_total_products_quantiy(request)
         price = get_price(request)

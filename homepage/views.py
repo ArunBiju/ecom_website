@@ -38,7 +38,7 @@ def get_price(request):
     products_quantity_in_cart = get_total_products_quantiy(request)
     mylists = zip(products_in_cart, products_quantity_in_cart)
     for product,quantity in mylists:
-        print(product.selling_price*quantity)
+     
         price.append(product.selling_price*quantity)
     return price
 
@@ -48,7 +48,6 @@ def addvaluetocarthp(request,slug):
     if request.session.get(f'product_{id}_quantity', False): 
         request.session[f'product_{id}'] = id
         request.session[f'product_{id}_quantity'] += 1
-        print(request.session.items())
         products_in_cart = get_products_in_cart(request)
         products_quantity_in_cart = get_total_products_quantiy(request)
         price = get_price(request)
@@ -103,7 +102,6 @@ def sort(request):
     hpbanner = HomepageImage.objects.get(pk=2)
     category = PrimaryCategoryModel.objects.all()
     search_term = (request.POST.get('search',None))
-    print(search_term)
     products = ProductModel.objects.filter(Q(name__contains=search_term)|Q(details__contains=search_term))
     context = {
         'products':products,
@@ -137,7 +135,6 @@ def primary(request, id):
     hpimage = HomepageImage.objects.get(pk=1)
     categoryimage = PrimaryCategoryModel.objects.get(pk=1)
     hpbanner = HomepageImage.objects.get(pk=2)
-    print(products_in_category)
     context = {
         'products':products_in_category,
         'cart_item_count':value,
@@ -196,7 +193,6 @@ def listing(request, page):
         page_object = paginator.page(page)
     except EmptyPage:
         page_object = paginator.page(1)
-    print(paginator.get_page(1))
     context = {
         'products':products,
         'cart_item_count':value,
@@ -215,7 +211,6 @@ def homepage(request):
     hpbanner = HomepageImage.objects.get(pk=2)
     paginator = Paginator(products, per_page=6)
     page_object = paginator.page(1)
-    print(paginator.get_page(1))
     context = {
         'products':products,
         'cart_item_count':value,

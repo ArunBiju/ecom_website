@@ -48,12 +48,12 @@ def addvaluetocart(request):
     if request.session.get(f'product_{id}_quantity', False): 
         request.session[f'product_{id}'] = id
         request.session[f'product_{id}_quantity'] += 1
-        print(request.session.items())
+
         return HttpResponse(sum(get_total_products_quantiy(request)))  
     else:
         request.session[f'product_{id}'] = id
         request.session[f'product_{id}_quantity'] = 1
-        print(request.session.items())
+  
         return HttpResponse(sum(get_total_products_quantiy(request)))
 
 def removevaluetocart(request):
@@ -63,22 +63,17 @@ def removevaluetocart(request):
         if int(request.session[f'product_{id}_quantity']) > 1 :
             request.session[f'product_{id}'] = id
             request.session[f'product_{id}_quantity'] -= 1
-            print(request.session.items())
+
             return HttpResponse(sum(get_total_products_quantiy(request)))
         else:
             try:
                 del request.session[f'product_{id}']
                 del request.session[f'product_{id}_quantity']
-                print(request.session.items())
-                print('secondlast')
                 return HttpResponse(sum(get_total_products_quantiy(request)))
             except:
-                print(request.session.items())
-                print('last')
+
                 return HttpResponse(sum(get_total_products_quantiy(request)))
     else:
-        print(request.session.items())
-        print('last')
         return HttpResponse(sum(get_total_products_quantiy(request)))
 
 
