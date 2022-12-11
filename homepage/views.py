@@ -97,13 +97,21 @@ def get_total_products_quantiy(request):
     return products_quantity
 
 
-def sortby(request):
-    search_term = (request.POST.get('search'))
+def sort(request):
+    value = sum(get_total_products_quantiy(request))
+    hpimage = HomepageImage.objects.get(pk=1)
+    hpbanner = HomepageImage.objects.get(pk=2)
     category = PrimaryCategoryModel.objects.all()
+    search_term = (request.POST.get('search',None))
+    print(search_term)
     products = ProductModel.objects.filter(Q(name__contains=search_term)|Q(details__contains=search_term))
     context = {
         'products':products,
         'categories':category,   
+        'cart_item_count':value,
+        'hpimage':hpimage,
+        'hpbanner':hpbanner,
+        'categories':category,
     }
     if len(products) == 0:
         return render(request, 'homepage/snippets/homepage_search_no_result.html', context)
@@ -140,9 +148,9 @@ def primary(request, id):
     }
     
     if len(products_in_category) == 0:
-        return render(request, 'homepage/snippets/no_result.html', context)
+        return render(request, 'homepage/snippets/homepage_search_no_result.html', context)
     else:
-        return render(request, 'homepage/snippets/search.html', context)
+        return render(request, 'homepage/snippets/homepage_search.html', context)
 
 def secondary(request, id):
 
